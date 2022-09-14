@@ -1,0 +1,38 @@
+[package]
+name = "maelstrom-core"
+version = "0.1.0"
+authors = [
+    "Manuel Holtgrewe <manuel.holtgrewe@bih-charite.de>",
+]
+description = "Tools for processing of NGS data"
+repository = "https://github.com/bihealth/maelstrom-core"
+documentation = "https://maelstrom-core.readthedocs.io"
+readme = "README.md"
+license = "MIT"
+edition = "2021"
+include = [
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md",
+]
+
+[package.metadata.release]
+pre-release-commit-message = "release version {{version}}"
+tag-message = "Version {{version}} of maelstrom-core."
+
+[dependencies]
+anyhow = "*"
+bio = "*"
+bio-types = "*"
+rust-htslib = "*"
+clap = { version = "*", features=["derive"] }
+clap-verbosity-flag = "*"
+console = "*"
+enum-utils = "*"
+file_diff = "*"
+indicatif = "*"
+tempdir = "*"
+thiserror = "*"
+
+[dev-dependencies]
+pretty_assertions = "*"
