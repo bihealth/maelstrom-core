@@ -49,8 +49,10 @@ pub fn load_doc_median(path: &str) -> Result<MedianReadDepthInfo, anyhow::Error>
         if all_chroms.contains(&chrom) {
             let median = if rcvs_by_chrom.is_empty() {
                 0.0
-            } else {
+            } else if !rcvs_by_chrom[rid as usize].is_empty() {
                 (&rcvs_by_chrom[rid as usize]).median()
+            } else {
+                0.0
             };
             by_chrom.insert(chrom.clone(), median);
         }
