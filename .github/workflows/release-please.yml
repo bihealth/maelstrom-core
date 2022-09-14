@@ -15,7 +15,7 @@ jobs:
         id: release
         with:
           release-type: rust
-          package-name: bio
+          package-name: maelstrom-core
 
       - uses: actions/checkout@v2
         if: ${{ steps.release.outputs.release_created }}

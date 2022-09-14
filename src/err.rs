@@ -5,15 +5,17 @@ use std::{
 
 #[derive(thiserror::Error, Debug, Clone)]
 pub enum AppError {
-    // #[error("Internal error.")]
+    // #[error("Internal error")]
     // Internal,
+    #[error("Invalid path")]
+    InvalidPath,
 }
 
 impl Termination for AppError {
     fn report(self) -> ExitCode {
         match self {
-            // Internal => ExitCode::from(1),
-            //   Other => ExitCode::from(255),
+            // AppError::Internal => ExitCode::from(1),
+            AppError::InvalidPath => ExitCode::from(1),
         }
     }
 }

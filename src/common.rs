@@ -1,6 +1,11 @@
+/// Commonly shared data structures
+pub mod bam;
+pub mod bcf;
+pub mod doc;
+pub mod stats;
+
 use std::str::FromStr;
 
-/// Commonly shared data structures
 use bio_types::genome::Interval as BioInterval;
 use bio_types::genome::Position;
 use clap::Args as ClapArgs;
@@ -37,7 +42,7 @@ impl ArgInterval {
     //     };
     // }
 
-    pub fn interval(&self) -> BioInterval {
+    pub fn to_interval(&self) -> BioInterval {
         self.internal.clone()
     }
 }
