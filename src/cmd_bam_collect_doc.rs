@@ -115,6 +115,8 @@ fn build_header(samples: &[String], contigs: &[Interval]) -> bcf::Header {
         // The meaning of coverage differs between the counting approaches (fragments vs. coverage).
         "##FORMAT=<ID=RCV,Number=1,Type=Float,Description=\"Raw coverage value\">",
         "##FORMAT=<ID=RCVSD,Number=1,Type=Float,Description=\"Raw coverage standard deviation\">",
+        "##FORMAT=<ID=CV,Number=1,Type=Float,Description=\"Normalized coverage value\">",
+        "##FORMAT=<ID=CVSD,Number=1,Type=Float,Description=\"Normalized coverage standard deviation\">",
     ];
     for line in lines {
         header.push_record(line.as_bytes());
@@ -258,6 +260,8 @@ fn process_region(
         record.push_format_float(b"RCV", &[stats.cov])?;
         if let Some(cov_sd) = stats.cov_sd {
             record.push_format_float(b"RCVSD", &[cov_sd])?;
+        } else {
+            record.push_format_float(b"RCVSD", &[0.0_f32])?;
         }
 
         record.push_format_float(b"MQ", &[stats.mean_mapq])?;
@@ -302,6 +306,24 @@ fn perform_final_write(
     while let Some(result) = reader.read(&mut record) {
         result?;
         writer.translate(&mut record);
+
+        let rcvs = record.format(b"RCV").float()?;
+        let rcvsds = record.format(b"RCVSD").float()?;
+
+        let cv = &[if doc_median_info.on_autosomes > 1e-6 {
+            rcvs[0][0] / doc_median_info.on_autosomes as f32
+        } else {
+            0.0_f32
+        }];
+        let cvsd = &[if doc_median_info.on_autosomes > 1e-6 {
+            rcvsds[0][0] / doc_median_info.on_autosomes as f32
+        } else {
+            0.0_f32
+        }];
+
+        record.push_format_float(b"CV", cv)?;
+        record.push_format_float(b"CVSD", cvsd)?;
+
         writer.write(&record)?;
     }
 
