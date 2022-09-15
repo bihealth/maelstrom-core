@@ -11,6 +11,7 @@ readme = "README.md"
 license = "MIT"
 edition = "2021"
 include = [
+    "src/**/*.rs",
     "LICENSE",
     "README.md",
     "CHANGELOG.md",
@@ -42,3 +43,7 @@ regex = "*"
 
 [dev-dependencies]
 pretty_assertions = "*"
+
+[[bin]]
+name = "maelstrom-core"
+path = "src/main.rs"
