@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.1](https://www.github.com/bihealth/maelstrom-core/compare/v0.1.0...v0.1.1) (2022-09-15)
+
+
+### Bug Fixes
+
+* pinning versions in Cargo.toml ([#10](https://www.github.com/bihealth/maelstrom-core/issues/10)) ([99117bb](https://www.github.com/bihealth/maelstrom-core/commit/99117bbc00260a54684353b7531a0558cea1a9d7))
+
 ## 0.1.0 (2022-09-15)
 
 
